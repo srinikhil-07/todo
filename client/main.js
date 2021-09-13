@@ -7,10 +7,10 @@ function addTask(newTask) {
     //console.log("Adding task")
     var tr = `
     <tr>  
-        <td>` + newTask.Type + `</td>  
         <td>` + newTask.Task + `</td>  
+        <td>` + newTask.Type + `</td> 
         <td>` + newTask.Description + `</td>  
-        <td><a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"></i></a></td>
+        <td><a class="delete" title="Delete" data-toggle="tooltip" style="cursor: pointer"><i class="material-icons"></i></a></td>
     </tr>
     `;
     //console.log("Task: " + tr);
@@ -42,7 +42,6 @@ $(document).ready(function() {
         $(this).parents("tr").remove();
         $(".add-new").removeAttr("disabled");
         var $table = $('#tasks')
-        console.log(" Task type: " + cols[2]);
         removeTask(cols);
     });
 });
@@ -66,9 +65,8 @@ function getTaskList() {
 
 function removeTask(taskInfo) {
     for (var itr = 0; itr < taskList.length; itr++) {
-        if (taskInfo[2] == taskList[itr].Task) {
+        if (taskInfo[3] == taskList[itr].Task) {
             taskList = taskList.splice(itr, 1);
         }
     }
-    console.log("Full task JSON: " + taskList);
 }
