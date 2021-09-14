@@ -1,11 +1,13 @@
 const express = require('express')
 const app = express()
-app.use('/static', express.static('client'))
+    //app.use('/static', express.static('client'))
     // Redirect root to /books
-app.get('/', (req, res) => {
-    res.redirect('/client/index.html');
+app.get('/task', (req, res) => {
+    res.redirect('/client/task/index.html');
 });
-
+app.get('/date', (req, res) => {
+    res.redirect('/client/date/index.html');
+});
 // Start the server
 const port = process.env.PORT || 8080;
 app.listen(port, () => {

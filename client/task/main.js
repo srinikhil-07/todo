@@ -1,16 +1,25 @@
 var taskList
+var taskNo = 0
 
 function addTask(newTask) {
     var tbodyRef = document.getElementById('tasks').getElementsByTagName('tbody')[0];
     var newRow = tbodyRef.insertRow();
     var newRow = tbodyRef.insertRow(tbodyRef.rows.length);
     //console.log("Adding task")
+
     var tr = `
     <tr>  
-        <td>` + newTask.Task + `</td>  
-        <td>` + newTask.Type + `</td> 
-        <td>` + newTask.Description + `</td>  
-        <td><a class="delete" title="Delete" data-toggle="tooltip" style="cursor: pointer"><i class="material-icons"></i></a></td>
+        <td  >` + newTask.Task + `</td>  
+        <td  >` + newTask.Type + `</td> 
+        <td  >` + newTask.Description + `</td>  
+        <td  >
+        <a class="delete" title="Delete" data-toggle="tooltip" style="cursor: pointer"><i class="material-icons"></i></a>
+        </td>
+        <td  >
+        <input checked class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+        </td>
     </tr>
     `;
     //console.log("Task: " + tr);
@@ -33,6 +42,9 @@ function getNewTask() {
 
 $(document).ready(function() {
     console.log("ready!");
+    let searchParams = new URLSearchParams(window.location.search)
+    let param = searchParams.get('data')
+    console.log("Task for " + getUrlParameter('date'))
     getTaskList();
     $(document).on("click", ".delete", function() {
         var rowid = $(this).closest('tr').text();
@@ -58,6 +70,7 @@ function getTaskList() {
             Description: "comments"
         }
     ]
+    taskNo = 0
     for (var itr = 0; itr < taskList.length; itr++) {
         addTask(taskList[itr])
     }
@@ -70,3 +83,18 @@ function removeTask(taskInfo) {
         }
     }
 }
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+    return false;
+};
