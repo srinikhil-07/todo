@@ -16,9 +16,12 @@ function addTask(newTask) {
         <a class="delete" title="Delete" data-toggle="tooltip" style="cursor: pointer"><i class="material-icons"></i></a>
         </td>
         <td  >
-        <input checked class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+        <select id="empid" class="form-select" aria-label="Default select example">
+            <option selected>Mark task status</option>
+            <option value="1">In-progress</option>
+            <option value="2">Done</option>
+            <option value="3">Yet to</option>
+        </select>
         </td>
     </tr>
     `;
@@ -56,6 +59,16 @@ $(document).ready(function() {
         var $table = $('#tasks')
         removeTask(cols);
     });
+    $(document).on("click", ".form-select", function() {
+        var rowid = $(this).closest('tr').text();
+        rowid = rowid.replace(/ /g, '');
+        var cols = rowid.split("\n");
+        console.log("Select selected for:" + cols)
+        $('.form-select').change(function() {
+            console.log($(this).find("option:selected").text());
+        })
+    });
+
 });
 
 function getTaskList() {
