@@ -1,5 +1,6 @@
 var taskList
 var taskNo = 0
+var date
 
 function addTask(newTask) {
     var tbodyRef = document.getElementById('tasks').getElementsByTagName('tbody')[0];
@@ -40,14 +41,16 @@ function getNewTask() {
     }
     addTask(newTask)
     taskList.push(newTask);
-    console.log("Full task JSON: " + taskList);
+    console.log("Full task JSON: ");
+    printTasks()
 }
 
 $(document).ready(function() {
     console.log("ready!");
     let searchParams = new URLSearchParams(window.location.search)
     let param = searchParams.get('data')
-    console.log("Task for " + getUrlParameter('date'))
+    date = getUrlParameter('date');
+    console.log("Task for " + date)
     getTaskList();
     $(document).on("click", ".delete", function() {
         var rowid = $(this).closest('tr').text();
@@ -90,11 +93,16 @@ function getTaskList() {
 }
 
 function removeTask(taskInfo) {
+    console.log("Task to delete:" + taskInfo);
     for (var itr = 0; itr < taskList.length; itr++) {
-        if (taskInfo[3] == taskList[itr].Task) {
-            taskList = taskList.splice(itr, 1);
+        if (taskInfo[2] == taskList[itr].Task) {
+            console.log("Removing task:" + taskList[itr].Task);
+            taskList.splice(itr, 1);
+            break;
         }
     }
+    console.log("Full task JSON: ");
+    printTasks()
 }
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1),
@@ -111,3 +119,24 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
     return false;
 };
+
+function printTasks() {
+    for (var itr = 0; itr < taskList.length; itr++) {
+        console.log("Task:" + taskList[itr].Task);
+    }
+}
+
+function postTasks() {
+    console.log("JSON to send" + JSON.stringify(taskList))
+    $.ajax({
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        url: '../../api/todo?date=' + date, //Ensure that 'to_do_list_function' is the package name of your function
+        data: JSON.stringify(taskList),
+        success: function(data) {
+            document.getElementById("button1").disabled = false;
+            document.getElementById("button2").disabled = true;
+            timePassed = 0;
+        }
+    });
+}

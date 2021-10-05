@@ -1,7 +1,8 @@
 const express = require('express')
 const app = express()
-    //app.use('/static', express.static('client'))
-    // Redirect root to /books
+app.use('/static', express.static('client'))
+app.use('/api/todo', require('./todo/api'));
+// Redirect root to /books
 app.get('/task', (req, res) => {
     res.redirect('/client/task/index.html');
 });

@@ -18,6 +18,8 @@
     },
     "homepage": "https://github.com/Nikhil0487/todo#readme",
     "dependencies": {
-        "express": "^4.17.1"
+        "@google-cloud/firestore": "^4.15.1",
+        "express": "^4.17.1",
+        "firebase": "^9.1.1"
     }
 }
