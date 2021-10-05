@@ -10,12 +10,15 @@ const collection = 'Tasks';
 // Creates a new book or updates an existing book with new data.
 async function update(userId, id, data) {
     let ref;
+    console.log("ref: " + id);
+    console.log(data);
     if (id === null) {
-        ref = db.collection(collection).doc(userId).collection(collection).doc();
+        ref = db.collection(collection).doc(1).collection(collection).doc();
     } else {
-        ref = db.collection(collection).doc(userId).collection(collection).doc(id);
+        ref = db.collection(collection).doc('1').collection(collection).doc(id);
     }
     data.id = ref.id;
+
     data = {...data };
     await ref.set(data);
     return data;
