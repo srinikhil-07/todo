@@ -38,12 +38,16 @@ async function getDataFor(user, id) {
         console.log('No matching documents.');
         //return;
     }
-    var tasks;
+    var tasks = null;
     snapshot.forEach(doc => {
         console.log(doc.id, '=>', doc.data());
         tasks = doc;
     });
-    return tasks.data();
+    if (tasks !== null) {
+        return tasks.data();
+    } else {
+        return ''
+    }
 }
 module.exports = {
     create,

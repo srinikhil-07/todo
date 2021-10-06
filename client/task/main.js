@@ -145,9 +145,6 @@ async function getTasks() {
         success: function(data) {
             let tasks = data;
             console.log("Tasks:" + JSON.stringify(tasks));
-            for (var itr = 0; itr < data.length; itr++) {
-                console.log("task:" + data[itr]);
-            }
             var itr = 0;
             while (true) {
                 console.log(data[itr]);
@@ -159,6 +156,12 @@ async function getTasks() {
                 }
                 itr++;
             }
+            // for (var key in tasks) {
+            //     if (tasks.hasOwnProperty(key)) {
+            //         var test = tasks[key];
+            //         console.log("TesT: " + test);
+            //     }
+            // }
             console.log("Length of tasks:" + taskList.length);
         }
     });
