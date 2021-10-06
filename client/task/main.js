@@ -10,8 +10,9 @@ function addTask(newTask) {
     if (typeof newTask.Status !== "undefined") {
         status = newTask.Status
     }
+    let rowColor = getRowColor()
     var tr = `
-    <tr>  
+    <tr class="table-warning">  
         <td  >` + newTask.Task + `</td>  
         <td  >` + newTask.Type + `</td> 
         <td  >` + newTask.Description + `</td>  
@@ -28,8 +29,20 @@ function addTask(newTask) {
         </td>
     </tr>
     `;
-    //console.log("Task: " + tr);
+    console.log("Task: " + tr);
     newRow.innerHTML = tr;
+}
+
+function getRowColor(taskStatus) {
+    var status = "table-active"
+    if (taskStatus == 'In-progress') {
+        status = "table-warning"
+    } else if (taskStatus == 'Done') {
+        status = "table-success"
+    } else if (taskStatus == 'Yet to') {
+        status = "table-danger"
+    }
+    return status
 }
 
 function getNewTask() {
@@ -82,7 +95,6 @@ $(document).ready(function() {
 
 function getTaskList() {
     getTasks();
-    taskNo = 0
     for (var itr = 0; itr < taskList.length; itr++) {
         addTask(taskList[itr])
     }
@@ -149,19 +161,12 @@ async function getTasks() {
             while (true) {
                 console.log(data[itr]);
                 if (typeof data[itr] !== "undefined") {
-                    //console.log("Task:" + JSON.stringify(data[itr]));
                     taskList.push(data[itr]);
                 } else {
                     break;
                 }
                 itr++;
             }
-            // for (var key in tasks) {
-            //     if (tasks.hasOwnProperty(key)) {
-            //         var test = tasks[key];
-            //         console.log("TesT: " + test);
-            //     }
-            // }
             console.log("Length of tasks:" + taskList.length);
         }
     });
@@ -170,14 +175,13 @@ async function getTasks() {
 function updateTask(taskInfo, status) {
     console.log("Task to update:" + taskInfo);
     for (var itr = 0; itr < taskList.length; itr++) {
-        if (taskInfo[2] == taskList[itr].Task) {
+        if (taskInfo[2] == taskList[itr].Task.replace(/ /g, '')) {
             console.log("updating task:" + taskList[itr].Task);
             console.log(taskInfo[11]);
             taskList[itr].Status = status;
             break;
         }
     }
-    console.log("Full task JSON: ");
     printTasks()
 }
 
