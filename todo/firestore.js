@@ -27,7 +27,26 @@ async function update(userId, id, data) {
 async function create(userId, data) {
     return await update(userId, null, data);
 }
+
+async function getDataFor(user, id) {
+    const userTasksRef = db.collection(collection).doc('1').collection(collection);
+    const queryRef = userTasksRef
+        .where('id', '==', id);
+    const snapshot = await queryRef
+        .get();
+    if (snapshot.empty) {
+        console.log('No matching documents.');
+        //return;
+    }
+    var tasks;
+    snapshot.forEach(doc => {
+        console.log(doc.id, '=>', doc.data());
+        tasks = doc;
+    });
+    return tasks.data();
+}
 module.exports = {
     create,
     update,
+    getDataFor,
 };

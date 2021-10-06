@@ -1,4 +1,4 @@
-var taskList
+var taskList = []
 var taskNo = 0
 var date
 
@@ -6,8 +6,10 @@ function addTask(newTask) {
     var tbodyRef = document.getElementById('tasks').getElementsByTagName('tbody')[0];
     var newRow = tbodyRef.insertRow();
     var newRow = tbodyRef.insertRow(tbodyRef.rows.length);
-    //console.log("Adding task")
-
+    var status = 'Mark task status'
+    if (typeof newTask.Status !== "undefined") {
+        status = newTask.Status
+    }
     var tr = `
     <tr>  
         <td  >` + newTask.Task + `</td>  
@@ -17,8 +19,8 @@ function addTask(newTask) {
         <a class="delete" title="Delete" data-toggle="tooltip" style="cursor: pointer"><i class="material-icons"></i></a>
         </td>
         <td  >
-        <select id="empid" class="form-select" aria-label="Default select example">
-            <option selected>Mark task status</option>
+        <select id="taskStatus" class="form-select" aria-label="Default select example">
+            <option selected>` + status + `</option>
             <option value="1">In-progress</option>
             <option value="2">Done</option>
             <option value="3">Yet to</option>
@@ -34,10 +36,12 @@ function getNewTask() {
     var task = $("#exampleFormControlInput1").val();
     var taskType = $("#exampleFormControlSelect1").val();
     var comments = $("#exampleFormControlTextarea1").val();
+    var status = $("#taskStatus").val();
     let newTask = {
         Task: task,
         Type: taskType,
-        Description: comments
+        Description: comments,
+        Status: status
     }
     addTask(newTask)
     taskList.push(newTask);
@@ -69,23 +73,15 @@ $(document).ready(function() {
         console.log("Select selected for:" + cols)
         $('.form-select').change(function() {
             console.log($(this).find("option:selected").text());
+            updateTask(cols, $(this).find("option:selected").text());
         })
+
     });
 
 });
 
 function getTaskList() {
-    taskList = [{
-            Task: "task",
-            Type: "taskType",
-            Description: "comments"
-        },
-        {
-            Task: "task2",
-            Type: "taskType",
-            Description: "comments"
-        }
-    ]
+    getTasks();
     taskNo = 0
     for (var itr = 0; itr < taskList.length; itr++) {
         addTask(taskList[itr])
@@ -121,8 +117,9 @@ var getUrlParameter = function getUrlParameter(sParam) {
 };
 
 function printTasks() {
+    console.log("Printing tasks");
     for (var itr = 0; itr < taskList.length; itr++) {
-        console.log("Task:" + taskList[itr].Task);
+        console.log("Task print:" + JSON.stringify(taskList[itr]));
     }
 }
 
@@ -134,9 +131,60 @@ function postTasks() {
         url: '../../api/todo?date=' + date, //Ensure that 'to_do_list_function' is the package name of your function
         data: JSON.stringify(taskList),
         success: function(data) {
-            document.getElementById("button1").disabled = false;
-            document.getElementById("button2").disabled = true;
-            timePassed = 0;
+            console.log("POST success");
         }
     });
 }
+
+async function getTasks() {
+    $.ajax({
+        type: 'GET',
+        contentType: "application/json; charset=utf-8",
+        url: '../../api/todo?date=' + date, //Ensure that 'to_do_list_function' is the package name of your function
+        async: false,
+        success: function(data) {
+            let tasks = data;
+            console.log("Tasks:" + JSON.stringify(tasks));
+            for (var itr = 0; itr < data.length; itr++) {
+                console.log("task:" + data[itr]);
+            }
+            var itr = 0;
+            while (true) {
+                console.log(data[itr]);
+                if (typeof data[itr] !== "undefined") {
+                    //console.log("Task:" + JSON.stringify(data[itr]));
+                    taskList.push(data[itr]);
+                } else {
+                    break;
+                }
+                itr++;
+            }
+            console.log("Length of tasks:" + taskList.length);
+        }
+    });
+}
+
+function updateTask(taskInfo, status) {
+    console.log("Task to update:" + taskInfo);
+    for (var itr = 0; itr < taskList.length; itr++) {
+        if (taskInfo[2] == taskList[itr].Task) {
+            console.log("updating task:" + taskList[itr].Task);
+            console.log(taskInfo[11]);
+            taskList[itr].Status = status;
+            break;
+        }
+    }
+    console.log("Full task JSON: ");
+    printTasks()
+}
+
+//     //taskList = [{
+//     Task: "task",
+//     Type: "taskType",
+//     Description: "comments"
+// }, {
+//     Task: "task2",
+//     Type: "taskType",
+//     Description: "comments"
+// }
+// ]
