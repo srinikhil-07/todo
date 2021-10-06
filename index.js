@@ -9,6 +9,9 @@ app.get('/task', (req, res) => {
 app.get('/date', (req, res) => {
     res.redirect('/client/date/index.html');
 });
+app.get('/', (req, res) => {
+    res.redirect('/static/date');
+});
 // Start the server
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
