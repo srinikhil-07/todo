@@ -14,3 +14,7 @@ body {
     width: 502px;
     margin: 100px auto;
 }
+
+img {
+    border-radius: 50%;
+}

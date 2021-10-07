@@ -15,7 +15,7 @@ async function update(userId, id, data) {
     if (id === null) {
         ref = db.collection(collection).doc(1).collection(collection).doc();
     } else {
-        ref = db.collection(collection).doc('1').collection(collection).doc(id);
+        ref = db.collection(collection).doc(userId).collection(collection).doc(id);
     }
     data.id = ref.id;
 
@@ -29,7 +29,7 @@ async function create(userId, data) {
 }
 
 async function getDataFor(user, id) {
-    const userTasksRef = db.collection(collection).doc('1').collection(collection);
+    const userTasksRef = db.collection(collection).doc(user).collection(collection);
     const queryRef = userTasksRef
         .where('id', '==', id);
     const snapshot = await queryRef

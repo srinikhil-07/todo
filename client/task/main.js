@@ -140,7 +140,7 @@ function postTasks() {
     $.ajax({
         type: 'POST',
         contentType: "application/json; charset=utf-8",
-        url: '../../api/todo?date=' + date, //Ensure that 'to_do_list_function' is the package name of your function
+        url: '../../api/todo?date=' + date + '&userId=' + localStorage.getItem("user_id"), //Ensure that 'to_do_list_function' is the package name of your function
         data: JSON.stringify(taskList),
         success: function(data) {
             console.log("POST success");
@@ -152,7 +152,7 @@ async function getTasks() {
     $.ajax({
         type: 'GET',
         contentType: "application/json; charset=utf-8",
-        url: '../../api/todo?date=' + date, //Ensure that 'to_do_list_function' is the package name of your function
+        url: '../../api/todo?date=' + date + '&user=' + localStorage.getItem("user_id"), //Ensure that 'to_do_list_function' is the package name of your function
         async: false,
         success: function(data) {
             let tasks = data;
