@@ -12,7 +12,7 @@ function addTask(newTask) {
     }
     let rowColor = getRowColor()
     var tr = `
-    <tr class="table-warning">  
+    <tr class="bg-success">  
         <td  >` + newTask.Task + `</td>  
         <td  >` + newTask.Type + `</td> 
         <td  >` + newTask.Description + `</td>  
@@ -29,7 +29,7 @@ function addTask(newTask) {
         </td>
     </tr>
     `;
-    console.log("Task: " + tr);
+    //console.log("Task: " + tr);
     newRow.innerHTML = tr;
 }
 
@@ -103,7 +103,7 @@ function getTaskList() {
 function removeTask(taskInfo) {
     console.log("Task to delete:" + taskInfo);
     for (var itr = 0; itr < taskList.length; itr++) {
-        if (taskInfo[2] == taskList[itr].Task) {
+        if (taskInfo[2] == taskList[itr].Task.replace(/ /g, '')) {
             console.log("Removing task:" + taskList[itr].Task);
             taskList.splice(itr, 1);
             break;
