@@ -15,7 +15,7 @@ function addTask(newTask) {
     <tr class="bg-success">  
         <td  >` + newTask.Task + `</td>  
         <td  >` + newTask.Type + `</td> 
-        <td  >` + newTask.Description + `</td>  
+        <td contenteditable="true" >` + newTask.Description + `</td>  
         <td  >
         <a class="delete" title="Delete" data-toggle="tooltip" style="cursor: pointer"><i class="material-icons"></i></a>
         </td>
@@ -184,14 +184,3 @@ function updateTask(taskInfo, status) {
     }
     printTasks()
 }
-
-//     //taskList = [{
-//     Task: "task",
-//     Type: "taskType",
-//     Description: "comments"
-// }, {
-//     Task: "task2",
-//     Type: "taskType",
-//     Description: "comments"
-// }
-// ]
