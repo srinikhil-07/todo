@@ -11,10 +11,16 @@ Fundamental design is as follows
 1. Pick a date after signing with Google
 
 
+![alt text](https://github.com/Nikhil0487/todo/blob/main/todo1.png)
+
+
+![alt text](https://github.com/Nikhil0487/todo/blob/main/todo2.png)
+
 
 2. Add/update/remove tasks for each date
 
 
+![alt text](https://github.com/Nikhil0487/todo/blob/main/todo3.png)
 
 
 
