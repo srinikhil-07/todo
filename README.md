@@ -14,8 +14,6 @@ Fundamental design is as follows
 ![alt text](https://github.com/Nikhil0487/todo/blob/main/todo1.png)
 
 
-![alt text](https://github.com/Nikhil0487/todo/blob/main/todo2.png)
-
 
 2. Add/update/remove tasks for each date
 
@@ -29,6 +27,9 @@ Yet to implement
 I have some ideas like
 
 1. Showing weekly/monthly graphs based on a variety of factors like: 
+
 a. Task type wise 
+
 b. Task status wise like completed/inprogress/yet-to tasks
+
 c. Get some interesting but useful things with data using AI?
