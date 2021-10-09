@@ -10,17 +10,16 @@ function addTask(newTask) {
     if (typeof newTask.Status !== "undefined") {
         status = newTask.Status
     }
-    let rowColor = getRowColor()
+    let rowColor = getRowColor(status)
     var tr = `
-    <tr class="bg-success">  
-        <td  >` + newTask.Task + `</td>  
-        <td  >` + newTask.Type + `</td> 
-        <td contenteditable="true" >` + newTask.Description + `</td>  
-        <td  >
+    <tr>  
+        <td class="` + rowColor + `" >` + newTask.Task + `</td> 
+        <td contenteditable="true" class="` + rowColor + `" >` + newTask.Description + `</td>  
+        <td class="` + rowColor + `" >
         <a class="delete" title="Delete" data-toggle="tooltip" style="cursor: pointer"><i class="material-icons"></i></a>
         </td>
-        <td  >
-        <select id="taskStatus" class="form-select" aria-label="Default select example">
+        <td class="` + rowColor + `" >
+        <select id="taskStatus" class="form-select ` + rowColor + `" aria-label="Default select example">
             <option selected>` + status + `</option>
             <option value="1">In-progress</option>
             <option value="2">Done</option>
