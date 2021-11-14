@@ -1,64 +1,42 @@
 var taskList = []
 var taskNo = 0
 var date
-
-function addTask(newTask) {
-    var tbodyRef = document.getElementById('tasks').getElementsByTagName('tbody')[0];
-    var newRow = tbodyRef.insertRow();
-    var newRow = tbodyRef.insertRow(tbodyRef.rows.length);
-    var status = 'Mark task status'
-    if (typeof newTask.Status !== "undefined") {
-        status = newTask.Status
-    }
-    let rowColor = getRowColor(status)
-    var tr = `
-    <tr>  
-        <td class="` + rowColor + `" >` + newTask.Task + `</td> 
-        <td contenteditable="true" class="` + rowColor + `" >` + newTask.Description + `</td>  
-        <td class="` + rowColor + `" >
-        <a class="delete" title="Delete" data-toggle="tooltip" style="cursor: pointer"><i class="material-icons"></i></a>
-        </td>
-        <td class="` + rowColor + `" >
-        <select id="taskStatus" class="form-select ` + rowColor + `" aria-label="Default select example">
-            <option selected>` + status + `</option>
-            <option value="1">In-progress</option>
-            <option value="2">Done</option>
-            <option value="3">Yet to</option>
-        </select>
-        </td>
-    </tr>
-    `;
-    //console.log("Task: " + tr);
-    newRow.innerHTML = tr;
-}
-
-function getRowColor(taskStatus) {
-    var status = "table-active"
-    if (taskStatus == 'In-progress') {
-        status = "table-warning"
-    } else if (taskStatus == 'Done') {
-        status = "table-success"
-    } else if (taskStatus == 'Yet to') {
-        status = "table-danger"
-    }
-    return status
-}
+var editTask = false;
+var editTaskId = -1
+var editRow;
+let deleteButton = `<a class="delete" title="Delete" data-toggle="tooltip" style="cursor: pointer" onclick="getConfirmation(this);" "><i class="material-icons" ></i></a>`
 
 function getNewTask() {
     var task = $("#exampleFormControlInput1").val();
     var taskType = $("#exampleFormControlSelect1").val();
     var comments = $("#exampleFormControlTextarea1").val();
-    var status = $("#taskStatus").val();
+    var status = $("#taskStatusSelect").val();
     let newTask = {
         Task: task,
         Type: taskType,
         Description: comments,
-        Status: status
+        Status: status,
+        Action: deleteButton
     }
-    addTask(newTask)
-    taskList.push(newTask);
-    console.log("Full task JSON: ");
-    printTasks()
+    var $table = $('#tasks')
+    if (!editTask) {
+        console.log("new task:" + newTask);
+        taskList.push(newTask);
+        $table.bootstrapTable('append', newTask)
+    } else {
+        taskList[editTaskId] = newTask
+        editTask = false;
+        $table.bootstrapTable('updateRow', {
+            index: editTaskId,
+            row: {
+                Task: newTask.Task,
+                Description: newTask.Description,
+                Action: deleteButton
+            }
+        })
+        editTaskId = -1;
+    };
+    postTasks()
 }
 
 $(document).ready(function() {
@@ -68,49 +46,31 @@ $(document).ready(function() {
     date = getUrlParameter('date');
     console.log("Task for " + date)
     getTaskList();
-    $(document).on("click", ".delete", function() {
-        var rowid = $(this).closest('tr').text();
-        rowid = rowid.replace(/ /g, '');
-        console.log(" Full data: " + rowid.split("\n"));
-        var cols = rowid.split("\n");
-        $(this).parents("tr").remove();
-        $(".add-new").removeAttr("disabled");
-        var $table = $('#tasks')
-        removeTask(cols);
+    $('#tasks').find('tr').click(function() {
+        var index = $(this).index();
+        $("#exampleFormControlInput1").val(taskList[index].Task);
+        $("#exampleFormControlSelect1").val(taskList[index].Type);
+        $("#exampleFormControlTextarea1").val(taskList[index].Description);
+        $("#taskStatusSelect").val(taskList[index].Status);
+        editTaskId = index;
+        editTask = true;
+        editRow = $(this).parents("tr");
+        $('#exampleModalCenter').modal('show');
     });
-    $(document).on("click", ".form-select", function() {
-        var rowid = $(this).closest('tr').text();
-        rowid = rowid.replace(/ /g, '');
-        var cols = rowid.split("\n");
-        console.log("Select selected for:" + cols)
-        $('.form-select').change(function() {
-            console.log($(this).find("option:selected").text());
-            updateTask(cols, $(this).find("option:selected").text());
-        })
-
-    });
-
 });
 
 function getTaskList() {
     getTasks();
     for (var itr = 0; itr < taskList.length; itr++) {
-        addTask(taskList[itr])
-    }
-}
-
-function removeTask(taskInfo) {
-    console.log("Task to delete:" + taskInfo);
-    for (var itr = 0; itr < taskList.length; itr++) {
-        if (taskInfo[2] == taskList[itr].Task.replace(/ /g, '')) {
-            console.log("Removing task:" + taskList[itr].Task);
-            taskList.splice(itr, 1);
-            break;
+        if (taskList[itr].Action !== deleteButton) {
+            taskList[itr].Action = deleteButton;
         }
     }
-    console.log("Full task JSON: ");
-    printTasks()
+    $('#tasks').bootstrapTable({
+        data: taskList
+    });
 }
+
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1),
         sURLVariables = sPageURL.split('&'),
@@ -171,15 +131,35 @@ async function getTasks() {
     });
 }
 
-function updateTask(taskInfo, status) {
-    console.log("Task to update:" + taskInfo);
-    for (var itr = 0; itr < taskList.length; itr++) {
-        if (taskInfo[2] == taskList[itr].Task.replace(/ /g, '')) {
-            console.log("updating task:" + taskList[itr].Task);
-            console.log(taskInfo[11]);
-            taskList[itr].Status = status;
-            break;
+function cellStyle(value, row, index) {
+    var classes = [
+        'table-warning',
+        'table-success',
+        'table-danger'
+    ]
+    if (row.Status === "In-progress" || row.Status === "In progress") {
+        return {
+            classes: classes[0]
+        }
+    } else if (row.Status === "Done") {
+        return {
+            classes: classes[1]
+        }
+    } else {
+        return {
+            classes: classes[2]
         }
     }
-    printTasks()
+}
+
+function getConfirmation(info) {
+    let rowId = info.closest('tr').rowIndex;
+    console.log("Delete: " + rowId);
+    var $table = $('#tasks')
+    $table.bootstrapTable('remove', {
+        field: '$index',
+        values: [rowId - 1]
+    })
+    taskList.splice(rowId - 1, 1);
+    postTasks()
 }

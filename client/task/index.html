@@ -85,23 +85,22 @@
             <table class="table table-hover" id="tasks">
                 <thead>
                     <tr class="table-primary">
-                        <th scope="col">Task</th>
-                        <th scope="col">Comments</th>
-                        <th scope="col">Action</th>
-                        <th scope="col">Status</th>
+                        <th scope="col" data-field="Task" data-cell-style="cellStyle">Task</th>
+                        <th scope="col" class="col-md-6" data-field="Description" data-cell-style="cellStyle">Comments</th>
+                        <th scope="col" data-field="Action" data-cell-style="cellStyle">Action</th>
                     </tr>
                 </thead>
                 <tbody>
 
                 </tbody>
             </table>
-            <div>
+            <div style="margin-top: 30px">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                 Add Task
               </button>
-                <button type="button" class="btn btn-success float-end" onclick="postTasks()">
+                <!--<button type="button" class="btn btn-success float-end" onclick="postTasks()">
                 Commit
-              </button>
+              </button>-->
             </div>
             <!-- Modal -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -120,11 +119,19 @@
                                     <input type="text" class="form-control" id="exampleFormControlInput1">
                                 </div>
                                 <div class="form-group ">
-                                    <label for="exampleFormControlSelect1 ">Type</label>
+                                    <label for="exampleFormControlSelect1">Type</label>
                                     <select class="form-control " id="exampleFormControlSelect1">
                                     <option>Habit</option>
                                     <option>Regular</option>
                                     <option>Challenge</option>
+                                  </select>
+                                </div>
+                                <div class="form-group ">
+                                    <label for="formStatus">Status</label>
+                                    <select class="form-control" id="taskStatusSelect">
+                                    <option>Yet to</option>
+                                    <option>In progress</option>
+                                    <option>Done</option>
                                   </select>
                                 </div>
                                 <div class="form-group ">
