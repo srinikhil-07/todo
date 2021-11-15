@@ -26,14 +26,11 @@ function getNewTask() {
     } else {
         taskList[editTaskId] = newTask
         editTask = false;
-        $table.bootstrapTable('updateRow', {
-            index: editTaskId,
-            row: {
-                Task: newTask.Task,
-                Description: newTask.Description,
-                Action: deleteButton
-            }
+        $table.bootstrapTable('remove', {
+            field: '$index',
+            values: [editTaskId]
         })
+        $table.bootstrapTable('append', newTask)
         editTaskId = -1;
     };
     postTasks()
