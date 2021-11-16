@@ -160,3 +160,15 @@ function getConfirmation(info) {
     taskList.splice(rowId - 1, 1);
     postTasks()
 }
+
+function goToDate(next) {
+    var newDate;
+    console.log("Next flag" + next);
+    if (next === 'true') {
+        newDate = String(Number(date) + 86400);
+        window.location.href = "../task?date=" + newDate;
+    } else {
+        newDate = String(Number(date) - 86400);
+        window.location.href = "../task?date=" + newDate;
+    }
+}
