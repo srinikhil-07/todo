@@ -102,59 +102,59 @@
                 Commit
               </button>-->
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-right-circle-fill float-end" viewBox="0 0 16 16" style="cursor: pointer" onclick="goToDate('true');">
-                <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z "/>
+                <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
               </svg>
-                <svg xmlns="http://www.w3.org/2000/svg " width="40 " height="40 " fill="currentColor " class="bi bi-arrow-left-circle-fill float-end " viewBox="0 0 16 16 " style="margin-right: 5px; cursor: pointer" onclick="goToDate('false');">
-                <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z "/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-left-circle-fill float-end" viewBox="0 0 16 16" style="margin-right: 5px; cursor: pointer" onclick="goToDate('false');">
+                <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
               </svg>
             </div>
             <!-- Modal -->
-            <div class="modal fade " id="exampleModalCenter " tabindex="-1 " role="dialog " aria-labelledby="exampleModalCenterTitle " aria-hidden="true ">
-                <div class="modal-dialog modal-dialog-centered " role="document ">
-                    <div class="modal-content ">
-                        <div class="modal-header ">
-                            <h5 class="modal-title " id="exampleModalLongTitle ">New task</h5>
-                            <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
-            <span aria-hidden="true ">&times;</span>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">New task</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
           </button>
                         </div>
-                        <div class="modal-body ">
+                        <div class="modal-body">
                             <form>
-                                <div class="form-group ">
-                                    <label for="exampleFormControlInput1 ">Task</label>
-                                    <input type="text " class="form-control " id="exampleFormControlInput1 ">
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Task</label>
+                                    <input type="text" class="form-control" id="exampleFormControlInput1">
                                 </div>
-                                <div class="form-group ">
-                                    <label for="exampleFormControlSelect1 ">Type</label>
-                                    <select class="form-control " id="exampleFormControlSelect1 ">
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Type</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
                                     <option>Habit</option>
                                     <option>Regular</option>
                                     <option>Challenge</option>
                                   </select>
                                 </div>
-                                <div class="form-group ">
-                                    <label for="formStatus ">Status</label>
-                                    <select class="form-control " id="taskStatusSelect ">
+                                <div class="form-group">
+                                    <label for="formStatus">Status</label>
+                                    <select class="form-control" id="taskStatusSelect">
                                     <option>Yet to</option>
                                     <option>In progress</option>
                                     <option>Done</option>
                                   </select>
                                 </div>
-                                <div class="form-group ">
-                                    <label for="exampleFormControlTextarea1 ">Comments</label>
-                                    <textarea class="form-control " id="exampleFormControlTextarea1 " rows="3 "></textarea>
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Comments</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                 </div>
                             </form>
                         </div>
-                        <div class="modal-footer ">
-                            <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
-                            <button id="Submit " type="button " class="btn btn-primary " onclick="getNewTask() " data-dismiss="modal ">Add</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button id="Submit" type="button" class="btn btn-primary" onclick="getNewTask()" data-dismiss="modal">Add</button>
                         </div>
                     </div>
                 </div>
             </div>
         </main>
-        <footer class=" pt-5 my-5 text-muted border-top ">
+        <footer class=" pt-5 my-5 text-muted border-top">
             Created by Sri Nikhil &middot; &copy; 2021
         </footer>
     </div>
