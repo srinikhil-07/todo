@@ -43,8 +43,9 @@ $(document).ready(function() {
     date = getUrlParameter('date');
     console.log("Task for " + date)
     getTaskList();
-    $('#tasks').find('tr').click(function() {
-        var index = $(this).index();
+    $('#tasks tbody').on('click', 'tr', function() {
+        let index = $(this).index()
+        console.log("click:" + $(this).index());
         $("#exampleFormControlInput1").val(taskList[index].Task);
         $("#exampleFormControlSelect1").val(taskList[index].Type);
         $("#exampleFormControlTextarea1").val(taskList[index].Description);
@@ -171,4 +172,16 @@ function goToDate(next) {
         newDate = String(Number(date) - 86400);
         window.location.href = "../task?date=" + newDate;
     }
+}
+
+function editTask(info) {
+    let index = info.closest('tr').rowIndex;
+    $("#exampleFormControlInput1").val(taskList[index].Task);
+    $("#exampleFormControlSelect1").val(taskList[index].Type);
+    $("#exampleFormControlTextarea1").val(taskList[index].Description);
+    $("#taskStatusSelect").val(taskList[index].Status);
+    editTaskId = index;
+    editTask = true;
+    editRow = $(this).parents("tr");
+    $('#exampleModalCenter').modal('show');
 }
