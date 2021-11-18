@@ -24,13 +24,14 @@ function getNewTask() {
         taskList.push(newTask);
         $table.bootstrapTable('append', newTask)
     } else {
-        taskList[editTaskId] = newTask
+        taskList.splice(editTaskId, 1);
         editTask = false;
         $table.bootstrapTable('remove', {
             field: '$index',
             values: [editTaskId]
         })
         $table.bootstrapTable('append', newTask)
+        taskList.push(newTask);
         editTaskId = -1;
     };
     postTasks()
